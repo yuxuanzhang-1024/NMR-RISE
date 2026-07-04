@@ -33,9 +33,12 @@ env/
 *.key
 
 # Downloaded datasets, checkpoints, and generated outputs
-/data/
-/runs/
-/results/
+/data/*
+!/data/README.md
+/runs/*
+!/runs/README.md
+/results/*
+!/results/README.md
 
 # Training and experiment logs
 lightning_logs/
