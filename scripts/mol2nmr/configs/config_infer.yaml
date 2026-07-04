@@ -1,0 +1,25 @@
+# defaults mirror your infer.sh values; override on CLI: python hydra_infer.py batch_size=32 gaussian_kernel=true
+data_path: "./data/pretrain/full_cc_pred_rmse_1"
+valid_subset: "test"
+results_path: "./runs/mol2nmr/full_cc_pred_rmse_pretrain_1"
+saved_dir: "./runs/mol2nmr/full_cc_pred_rmse_pretrain_1"
+num_workers: 0
+ddp_backend: "c10d"
+batch_size: 64
+task: "mol2nmr"
+loss: "atom_regloss_mae"
+arch: "unimol_large"
+dict_name: "dict.txt"
+checkpoint_path: "${saved_dir}/checkpoint_best.pt"
+fp16: true
+fp16_init_scale: 4
+fp16_scale_window: 256
+log_interval: 50
+log_format: "simple"
+required_batch_size_multiple: 1
+selected_atom: "C&H"
+global_distance_flag: ""   # put flag string if needed
+gaussian_kernel: true
+atom_descriptor: 0
+split_mode: "infer"
+extra_args: []  # list of extra CLI args to forward

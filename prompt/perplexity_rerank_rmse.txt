@@ -1,0 +1,60 @@
+# Context
+You will receive Nuclear Magnetic Resonance (NMR) data of a molecule, including its molecular formula, a list of ^1H NMR spectral peaks, and a list of ^13C NMR peaks. Additionally, You will also receive up to 10 candidate SMILES structures. Each candidate includes: 
+1. SMILES structure (validated syntax) 
+2. Molecule structure images (all structure images of the candidates are merged and presented in the input PDF file named "candidate_structure_images.pdf", with atom index mapping and candidate index shown in the upper-left corner of each image)
+3. Predicted atom-mapping $^{{13}}$C NMR peaks and $^1$H NMR peaks from Mol2NMR model 
+4. NMR peak normalized RMSE(Root Mean Square Error) score for both $^{{13}}$C and $^1$H predictions (higher scores indicate better agreement between predicted atom-wise NMR peaks and input NMR data) 
+5. Optimization Completeness Score (higher scores indicate greater confidence that the candidate structure is complete and requires no further refinement) 
+6. Comprehensive Evaluation Score (input candidate list sorted descending by this score)
+These candidates are generated from a multi-stage deep learning workflow comprising three models: NMR2Mol, MolRef, and Mol2NMR. The workflow proceeds as follows: NMR2Mol initially predicts candidate structures from the NMR data. Subsequently, multiple refinement rounds are conducted to improve the quality of the candidate pool. In each refinement round, MolRef refines newly added candidates and evaluates the extent to which each candidate requires further optimization. Mol2NMR then predicts atom-wise NMR peak values for each candidate. At the end of each refinement round, candidates are reranked and filtered based on two complementary metrics described below.
+1. NMR Peak Normalized RMSE Score:
+This metric evaluates the similarity between predicted and input NMR spectra peaks by framing peak alignment as a bipartite matching problem—necessary because input NMR data lacks atom-level peak assignments—and solving it via the Kuhn–Munkres (Hungarian) algorithm. Similarity is quantified by the RMSE between input peaks and their matched predicted counterparts, which is then normalized by a negative exponential transformation. The formula is: 
+\[\text{{RMSE}}_\text{{norm}}(S_\text{{target}}, S_\text{{pred}}) = e^{{-\frac{{1}}{{\alpha}}\sqrt{{ \frac{{1}}{{p}} \sum_{{(i,j) \in P}} (x_i - y_j)^2 }} }}\]
+where $S_\text{{target}} = \{{x_1, x_2, x_3, …, x_m\}}$ denotes the target NMR spectra peak list, $S_\text{{pred}} = \{{y_1, y_2, y_3, …, y_n\}}$ denotes the predicted NMR spectra list, $P$ represents the peak-to-peak correspondences list, $p$ is the length of $P$, and $\alpha$ is the scale factor which is 0.5 for $^1$H NMR and 5 for $^{{13}}$C NMR.
+2. Optimization Completeness Score
+This metric evaluates the structural optimization completeness of a candidate molecule. When the MolRef model generates a SMILES sequence identical to a candidate's SMILES, the MolRef inference score for that sequence is used as the optimization completeness score. If the candidate SMILES does not appear among the newly generated SMILES, the minimum inference score among all newly generated candidates is used instead. Higher values indicate greater optimization completeness and represent the model's confidence that the candidate requires no further refinement.
+
+The Comprehensive Evaluation Score(CES) for a candidate is then computed as a weighted sum of the CNMR Normalized RMSE Score (0.6), HNMR Normalized RMSE Score (0.3), and Optimization Completeness Score (0.1). Candidates are ranked in descending order based on this score at the end of each refinement round.
+CES provides a useful quantitative starting point but has important limitations: it relies on fixed global weights, is driven purely by numerical similarity, and cannot assess chemical feasibility, detailed spectral features (such as multiplicity and coupling patterns), or cross-consistency between different types of NMR information. It also directly inherits any systematic bias in the Mol2NMR and MolRef models and may assign high scores to chemically unreasonable structures or to candidates that only coincidentally match peak positions. To address these limitations, we want you to integrate chemical reasoning with all pipeline outputs—including candidate structures, predicted spectra, and quantitative scores—to critically reassess and potentially override the CES-based ranking, thereby producing a final ranking that is more chemically and spectroscopically consistent.
+
+# Task Requirement
+Systematically evaluate the given NMR data and the candidate molecules using sound chemical reasoning. Your output must be a single Python dictionary containing four clearly defined sections as follows:
+Section 1: Under the key "NMR Analysis", provide an analysis for input NMR data of the target molecule. Use the input molecular formula and NMR data (chemical shifts and splitting patterns) to identify the most likely functional groups present in the target molecule and then propose probable structural frameworks consistent with these observed data.
+Section 2: Under the key "Candidate Molecule Analysis", include a list of dictionaries (one per candidate). Each candidate’s analysis must follow the input order and address the following points:
+1. Molecule Structure： Assess the chemical plausibility, geometry, and substitution patterns of the candidate. Then, evaluate its structural uniqueness relative to other candidates and whether this uniqueness is supported by the input NMR data.
+2. Spectral Consistency: Evaluate the plausibility of predicted atom-wise NMR peaks (from Mol2NMR). Then assess the consistency between predicted and experimental spectra and highlight any discrepancies.
+3. Quantitative metrics: Discuss the candidate’s NMR Peak Normalized RMSE Scores (^1H and ^13C), Optimization Completeness Score, and Comprehensive Evaluation Score in the context of chemical reasoning.
+Each candidate’s entry should be a dictionary containing its index, SMILES string, and structured reasoning text for each of the focus areas listed above.
+Section 3: Under the key "Final Ranking Rationale", provide a critical analysis of the candidates’ initial CES-based ranking based on the above analysis for input NMR data and candidate molecules. Use chemical reasoning—particularly molecular structure and spectral consistency—assisted with the quantitative metrics to justify an alternative, more chemically reasonable ranking.
+Section 4: Under the key "Reranked Molecular Smiles", list the SMILES strings in their newly determined order. This section must contain only the Python list of SMILES strings, with no additional comments or text.
+Additional Notes: The final output must be a valid Python dictionary containing all four sections. Do not include any explanations or commentary outside this structured output. The reranked SMILES list must correspond exactly to the provided candidates, only reordered.
+
+# Example Output Format 
+{{
+    "NMR Analysis": "<Your analysis for input NMR data here>",
+    "Candidate Molecule Analysis":
+        [
+            {{
+                "candidate_idx": 1,
+                "candidate_SMILES": "<candidate SMILES here>",
+                "Molecule Structure": "<analysis text here>',
+                "Spectral Consistency": "<analysis text here>",
+                'Quantitative metrics': "<analysis text here>",
+            }},
+            {{
+                "candidate_idx": 2,
+                "candidate_SMILES": "<candidate SMILES here>",
+                "Molecule Structure": "<analysis text here>',
+                "Spectral Consistency": "<analysis text here>",
+                "Quantitative metrics": "<analysis text here>",
+            }},
+            <Your analysis for other candidate molecules here>
+        ],
+    "Final Ranking Rationale": "<Your reasoning for final ranking here>",
+    "Reranked Molecular Smiles": ["<candidate SMILES 1>", "<candidate SMILES 2>", "<candidate SMILES 3>", ...]
+}}
+
+## Analysis and Reranking
+Molecular NMR Data: {nmr_data}
+Candidates: {candidates_info_summary}
+Analyze the candidates and provide the new ranked list of SMILES strings.

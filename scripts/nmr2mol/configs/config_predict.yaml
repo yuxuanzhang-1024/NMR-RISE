@@ -1,0 +1,45 @@
+# @package _global_
+
+# Define job name
+job_name: null
+
+# Working directory where everything is stored. Needs to be overriten depending on use
+working_dir: null
+
+# Data Arguments
+data_path: null
+preprocessor_path: null
+
+splitting: random
+cv_split: 0 
+
+finetuning: False
+molecules: True
+num_cpu: 7
+predict_class: null
+mixture: null 
+
+trainer:
+  log_dir: ${working_dir}
+  task: ${job_name}
+  epochs: 60
+  acc_batches: 4
+  clip_grad: 1.0
+  limit_val_batches: 1.0
+
+defaults:
+  - _self_
+  
+  # Data/Embedding type can be selected
+  - data: ir/patches 
+
+  - augment: no_augment
+
+  - model:
+      - custom_hf_bart 
+
+  - hydra: default
+
+  - debug: null
+
+  - mixture: null

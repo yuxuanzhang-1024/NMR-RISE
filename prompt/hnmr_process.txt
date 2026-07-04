@@ -1,0 +1,38 @@
+You will be given a string containing information about 1H NMR spectrum peaks. Your task is to extract the information for each peak and format it as a dictionary with the following keys: 'value', 'rangeMax', 'rangeMin', 'intensity', 'j_values' and 'type'. Finally, return a list of these dictionaries representing the full NMR spectrum.
+[
+    {{
+        'value': <float>,
+        'rangeMax': <float>,
+        'rangeMin': <float>,
+        'intensity': <float>,
+        'j_values': <string>,
+        'type': <string>
+    }}
+    ...
+]
+Following are definitions of each key:
+value: Central chemical shift (ppm), or None if no exact value
+rangeMax: Highest chemical shift (ppm), or None if no exact value
+rangeMin: Lowest chemical shift (ppm), or None if no exact value
+intensity: Peak integration or intensity
+j_values: The J-coupling constants (Hz) describing spin–spin coupling between nuclei; concatenate multiple ones using underscores (e.g., "7.2_6.8_"), or use None if none are given.
+type: Multiplicity, using NMR notation (s, d, t, q, m, dd, dt, br, app, etc.)
+
+Following is an example:
+Input:
+1.55 (d, 3H, J = 6.7 Hz), 2.29 (s, 3H), 2.37–2.79 (2 m, 4 H), 2.92 (m, 1H), 3.67 (s, 3H), 4.55 (m, 1H)
+Output:
+<answer_list>
+[
+{{'value': 1.55, 'rangeMax': None, 'rangeMin': None, 'intensity': 3.0, 'j_values': '6.7_', 'type': 'd'}},
+{{'value': 2.29, 'rangeMax': None, 'rangeMin': None, 'intensity': 3.0, 'j_values': None, 'type': 's'}},
+{{'value': None, 'rangeMax': 2.79, 'rangeMin': 2.37, 'intensity': 4.0,  'j_values': None, 'type': 'm'}},
+{{'value': 2.92, 'rangeMax': None, 'rangeMin': None, 'intensity': 1.0, 'j_values': None, 'type': 'm'}},
+{{'value': 3.67, 'rangeMax': None, 'rangeMin': None, 'intensity': 3.0, 'j_values': None, 'type': 's'}},
+{{'value': 4.55, 'rangeMax': None, 'rangeMin': None, 'intensity': 1.0, 'j_values': None, 'type': 'm'}}
+]
+</answer_list>
+
+Now please extract the following H NMR peak sequence:
+{hnmr_sequence}
+Please extract the NMR peak data as described and return only the result list, enclosed between <answer_list> and </answer_list> tags.

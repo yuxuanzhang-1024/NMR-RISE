@@ -1,0 +1,7 @@
+input_dataset_path: ""
+output_dataset_path: ""
+mol2nmr_ckpt_dir: ""
+mol2nmr_ckpt_name: ""
+task_type: conformation_construction
+batch_size: 64
+show_progress: true

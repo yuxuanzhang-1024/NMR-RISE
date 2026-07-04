@@ -1,0 +1,16 @@
+source,NMR Similarity Metric,Ratio Setting,Top 1,Top 3,Top 5,Top 10,Tani@1,Tani@3,Tani@5,Tani@10
+evaluation_USPTO-NMR_1000_10_5_rmse_010,RMSE,"(0, 1)",0.498,0.594,0.636,0.69,0.7383,0.8093,0.8359,0.8641
+evaluation_USPTO-NMR_1000_10_5_rmse_100,RMSE,"(1, 0)",0.579,0.751,0.8,0.816,0.8576,0.8889,0.9001,0.906
+evaluation_USPTO-NMR_1000_10_5_rmse_28,RMSE,"(0.2, 0.8)",0.613,0.697,0.724,0.764,0.8292,0.8673,0.8781,0.8944
+evaluation_USPTO-NMR_1000_10_5_rmse_46,RMSE,"(0.4, 0.6)",0.634,0.744,0.779,0.81,0.8436,0.8831,0.8968,0.9063
+evaluation_USPTO-NMR_1000_10_5_rmse_55,RMSE,"(0.5, 0.5)",0.65,0.771,0.8,0.817,0.8519,0.8911,0.9022,0.9086
+evaluation_USPTO-NMR_1000_10_5_rmse_64,RMSE,"(0.6, 0.4)",0.662,0.782,0.803,0.816,0.86,0.8945,0.9018,0.9064
+evaluation_USPTO-NMR_1000_10_5_rmse_82,RMSE,"(0.8, 0.2)",0.672,0.784,0.804,0.818,0.865,0.8918,0.8996,0.9058
+evaluation_USPTO-NMR_1000_10_5_set_match_score_010,Set Match Score,"(0, 1)",0.498,0.594,0.636,0.69,0.7383,0.8093,0.8359,0.8641
+evaluation_USPTO-NMR_1000_10_5_set_match_score_100,Set Match Score,"(1, 0)",0.591,0.759,0.804,0.823,0.8609,0.8925,0.9018,0.9085
+evaluation_USPTO-NMR_1000_10_5_set_match_score_28,Set Match Score,"(0.2, 0.8)",0.584,0.643,0.67,0.707,0.8109,0.8441,0.8607,0.8755
+evaluation_USPTO-NMR_1000_10_5_set_match_score_46,Set Match Score,"(0.4, 0.6)",0.592,0.659,0.683,0.725,0.817,0.8539,0.8663,0.8836
+evaluation_USPTO-NMR_1000_10_5_set_match_score_55,Set Match Score,"(0.5, 0.5)",0.597,0.668,0.697,0.743,0.8211,0.8574,0.8726,0.8887
+evaluation_USPTO-NMR_1000_10_5_set_match_score_64,Set Match Score,"(0.6, 0.4)",0.604,0.68,0.712,0.754,0.8245,0.8643,0.8774,0.8924
+evaluation_USPTO-NMR_1000_10_5_set_match_score_82,Set Match Score,"(0.8, 0.2)",0.617,0.727,0.754,0.797,0.8387,0.8817,0.891,0.9043
+nmr2mol,-,-,0.471,0.616,0.656,0.717,0.7383,0.8178,0.8394,0.8649

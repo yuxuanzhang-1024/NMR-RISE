@@ -1,0 +1,16 @@
+source,NMR Similarity Metric,Ratio Setting,Top 1,Top 3,Top 5,Top 10,Tani@1,Tani@3,Tani@5,Tani@10
+evaluation_NMRBank_1000_10_5_rmse_010,RMSE,"(0, 1)",0.35,0.433,0.468,0.517,0.5884,0.6533,0.6769,0.7023
+evaluation_NMRBank_1000_10_5_rmse_100,RMSE,"(1, 0)",0.453,0.559,0.581,0.597,0.6609,0.6991,0.7126,0.7251
+evaluation_NMRBank_1000_10_5_rmse_28,RMSE,"(0.2, 0.8)",0.428,0.511,0.537,0.571,0.6393,0.6882,0.7018,0.7199
+evaluation_NMRBank_1000_10_5_rmse_46,RMSE,"(0.4, 0.6)",0.46,0.544,0.573,0.597,0.6568,0.6976,0.7149,0.7296
+evaluation_NMRBank_1000_10_5_rmse_55,RMSE,"(0.5, 0.5)",0.464,0.557,0.585,0.604,0.6563,0.702,0.7175,0.7305
+evaluation_NMRBank_1000_10_5_rmse_64,RMSE,"(0.6, 0.4)",0.475,0.56,0.587,0.604,0.6606,0.7023,0.7175,0.7303
+evaluation_NMRBank_1000_10_5_rmse_82,RMSE,"(0.8, 0.2)",0.485,0.572,0.589,0.602,0.664,0.7041,0.7165,0.728
+evaluation_NMRBank_1000_10_5_set_match_score_010,Set Match Score,"(0, 1)",0.35,0.433,0.468,0.517,0.5884,0.6533,0.6769,0.7023
+evaluation_NMRBank_1000_10_5_set_match_score_100,Set Match Score,"(1, 0)",0.466,0.576,0.59,0.605,0.6691,0.7068,0.7184,0.7284
+evaluation_NMRBank_1000_10_5_set_match_score_28,Set Match Score,"(0.2, 0.8)",0.398,0.465,0.491,0.533,0.6294,0.6731,0.6888,0.7088
+evaluation_NMRBank_1000_10_5_set_match_score_46,Set Match Score,"(0.4, 0.6)",0.408,0.479,0.511,0.552,0.6349,0.6777,0.6966,0.7159
+evaluation_NMRBank_1000_10_5_set_match_score_55,Set Match Score,"(0.5, 0.5)",0.411,0.492,0.521,0.56,0.6356,0.6831,0.7016,0.7192
+evaluation_NMRBank_1000_10_5_set_match_score_64,Set Match Score,"(0.6, 0.4)",0.42,0.506,0.534,0.57,0.6396,0.6909,0.7043,0.7231
+evaluation_NMRBank_1000_10_5_set_match_score_82,Set Match Score,"(0.8, 0.2)",0.442,0.537,0.568,0.595,0.6526,0.7016,0.7155,0.7297
+nmr2mol,-,-,0.299,0.417,0.458,0.505,0.5586,0.6378,0.6643,0.693

@@ -1,0 +1,65 @@
+# Hydra config for unicore training. Override values on the CLI, or run multi-run sweeps with `-m`.
+# Example: python hydra_train.py lr=0.001 batch_size=32
+
+# Paths
+data_path: ""
+save_dir: ""
+weight_path: "/weights"
+weight_name: "pretraining_molecular"
+dict_name: "dict"
+
+# GPU / distributed
+n_gpu: 1
+master_port: 33332
+num_workers: 0
+ddp_backend: "c10d"
+omp_num_threads: 1
+
+# Training params
+train_subset: "train"
+valid_subset: "valid"
+task: "mol2nmr"
+loss: "atom_regloss_mae"
+arch: "unimol_large"
+optimizer: "adam"
+adam_betas: [0.9, 0.99]
+adam_eps: 1e-6
+clip_norm: 1.0
+lr_scheduler: "polynomial_decay"
+lr: 0.005
+warmup: 0.06
+epoch: 100
+batch_size: 64
+update_freq: 1
+seed: 1
+
+# FP16
+fp16:
+  enable: true
+  init_scale: 4
+  scale_window: 256
+
+# Model misc
+num_classes: 1
+dropout: 0.0
+
+# Checkpointing / logging
+log_interval: 1000
+log_format: "simple"
+validate_interval: 1
+keep_last_epochs: 1
+save_interval: 1
+best_checkpoint_metric: "valid_rmse"
+
+# Domain specific
+selected_atom: "C&H"
+split_mode: "predefine"
+global_distance_flag: ""
+gauss_flag: true
+atom_descriptor: 0
+
+# Optional flags
+global_batch_size: ${hydra:runtime.overrides.raw_value:}
+
+# Additional
+task_flags: []
